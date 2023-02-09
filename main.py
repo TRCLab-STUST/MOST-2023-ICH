@@ -1,5 +1,3 @@
-import enum
-
 from trclab.application import TRCLabApp
 
 
