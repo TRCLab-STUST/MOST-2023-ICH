@@ -157,7 +157,7 @@ pip-selfcheck.json
 # Animated Portable Network Graphics
 *.apng
 
-# Multiple-image Network Graphics
+# Multiple-img Network Graphics
 *.mng
 
 # Tagged Image File Format

@@ -1,9 +1,11 @@
-import tensorflow as tf
-
+import dotenv
+import dataset
 
 def main():
-    print(tf.config.list_physical_devices())
+    dataset_ich = dataset.RsnaICH()
+    print(dataset_ich.train_labels)
 
 
 if __name__ == '__main__':
+    dotenv.load_dotenv()
     main()

@@ -1,3 +1,16 @@
 {
-  "ich_image": ""
+  "filename": "TEST_IMAE_001.dcm",
+  "type": "DICOM",
+  "path": "/Datasets/RSNA_ICH/stage_2_test",
+  "diagnosis": 3,
+  "metadata": {
+    "resolution": {
+      "width": "1920",
+      "height": "10800"
+    },
+    "dicom": {
+      "intercept": 0,
+      "slope": -1024
+    }
+  }
 }
