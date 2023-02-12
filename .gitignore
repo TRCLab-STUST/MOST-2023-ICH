@@ -1,3 +1,11 @@
+### Tensorflow
+*.tfrecord
+
+### Medical Iamge
+*.dcm
+*.nii
+*.nii.gz
+
 ### VisualStudioCode template
 .vscode/*
 !.vscode/settings.json
