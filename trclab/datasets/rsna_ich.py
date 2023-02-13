@@ -16,10 +16,20 @@ class RsnaICHFileManager(DatasetFileManager):
 
     @property
     def train_image_filepaths(self) -> [str]:
+        """
+        獲取 RSNA 資料集的訓練集檔案集路徑
+
+        :return: RSNA訓練集檔案路徑
+        """
         return glob.glob(os.path.join(self.__dataset_train, "*.dcm"))
 
     @property
     def test_image_filepaths(self) -> [str]:
+        """
+        獲取 RSNA 資料集的測試集檔案集路徑
+
+        :return: RSNA測試集檔案路徑
+        """
         return glob.glob(os.path.join(self.__dataset_test, "*.dcm"))
 
     @property

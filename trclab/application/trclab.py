@@ -28,6 +28,15 @@ class TRCLabApp(abc.ABC):
         """
         return self.__logger
 
+    @property
+    def app_name(self) -> str:
+        """
+        Get App name
+
+        :return: App Name
+        """
+        return self.__app_name
+
     def run(self) -> None:
         """
         Start your application.
@@ -49,15 +58,6 @@ class TRCLabApp(abc.ABC):
 
         """
         self.on_disable()
-
-    @property
-    def app_name(self) -> str:
-        """
-        Get App name
-
-        :return: App Name
-        """
-        return self.__app_name
 
     def __del__(self):
         """
