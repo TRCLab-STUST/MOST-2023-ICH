@@ -4,7 +4,7 @@ from trclab.datasets.dataset_file_manager import DatasetFileManager
 
 
 class ICH127FileManager(DatasetFileManager):
-    __DATASET_DIR = os.environ["DATASET_ICH_127"]
+    __DATASET_DIR = os.environ["DATASET_ICH_127_DIRNAME"]
 
     def __init__(self, dataset_dir: str):
         super().__init__(dataset_dir)

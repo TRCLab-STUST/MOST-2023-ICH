@@ -2,10 +2,10 @@ import os
 import abc
 import logging
 
-import dotenv
-
 
 class TRCLabApp(abc.ABC):
+    RUNTIME_TYPE = os.environ["PROJECT_RUNTIME"]
+
     __LOGGER: logging.Logger = logging.getLogger(name="TRCLabApp")
     __HANDLER: logging.StreamHandler = logging.StreamHandler()
     __FORMATTER: logging.Formatter = logging.Formatter("%(asctime)s [%(levelname)s] [%(name)s] %(message)s")
@@ -15,9 +15,9 @@ class TRCLabApp(abc.ABC):
     __LOGGER.addHandler(__HANDLER)
 
     def __init__(self, app_name):
-        dotenv.load_dotenv()
         self.__app_name: str = app_name
         self.__logger = TRCLabApp.__LOGGER.getChild(self.__app_name)
+        self.__dataset_manager = None  # TODO Dataset Manager
 
     @property
     def logger(self) -> logging.Logger:
@@ -49,6 +49,15 @@ class TRCLabApp(abc.ABC):
 
         """
         self.on_disable()
+
+    @property
+    def app_name(self) -> str:
+        """
+        Get App name
+
+        :return: App Name
+        """
+        return self.__app_name
 
     def __del__(self):
         """

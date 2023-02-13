@@ -7,7 +7,7 @@ from trclab.datasets.dataset_file_manager import DatasetFileManager
 
 
 class RsnaICHFileManager(DatasetFileManager):
-    __DATASET_DIR = os.environ["DATASET_RSNA_ICH"]
+    __DATASET_DIR = os.environ["DATASET_RSNA_ICH_DIRNAME"]
 
     def __init__(self):
         super().__init__(RsnaICHFileManager.__DATASET_DIR)
