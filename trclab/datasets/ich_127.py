@@ -10,6 +10,8 @@ class ICH127FileManager(DatasetFileManager):
 
     def __init__(self):
         super().__init__(ICH127FileManager.__DATASET_DIR)
+        random.seed(int(os.environ["RANDOM_SEED"]))
+
         image_files = glob.glob(os.path.join(self.folder_path, "**/*.dcm"), recursive=True)
         label_files = glob.glob(os.path.join(self.folder_path, "**/*.tif"), recursive=True)
 
@@ -36,6 +38,7 @@ class ICH127FileManager(DatasetFileManager):
 
         dataset_list = list(dataset_paired.items())
         random.shuffle(dataset_list)
+
         self.__train_paired: dict = dict(dataset_list[:int(len(dataset_paired.keys()) * 0.8)])
         self.__test_paired: dict = dict(dataset_list[int(len(dataset_paired.keys()) * 0.8):])
 
