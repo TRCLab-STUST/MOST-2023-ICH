@@ -1,9 +1,9 @@
 import glob
 import os
-
 import pandas as pd
+from typing import List
 
-from trclab.datasets.dataset_file_manager import DatasetFileManager
+from ..application.datasets import DatasetFileManager
 
 
 class RsnaICHFileManager(DatasetFileManager):
@@ -15,7 +15,7 @@ class RsnaICHFileManager(DatasetFileManager):
         self.__dataset_test = os.path.join(self.folder_path, "stage_2_train")
 
     @property
-    def train_image_filepaths(self) -> [str]:
+    def train_image_filepaths(self) -> List[str]:
         """
         獲取 RSNA 資料集的訓練集檔案集路徑
 
@@ -24,7 +24,7 @@ class RsnaICHFileManager(DatasetFileManager):
         return glob.glob(os.path.join(self.__dataset_train, "*.dcm"))
 
     @property
-    def test_image_filepaths(self) -> [str]:
+    def test_image_filepaths(self) -> List[str]:
         """
         獲取 RSNA 資料集的測試集檔案集路徑
 

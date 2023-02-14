@@ -1,5 +1,4 @@
 import trclab as tlab
-from trclab.datasets import *
 
 
 class MyApp(tlab.TRCLabApp):
