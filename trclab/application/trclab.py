@@ -2,6 +2,8 @@ import os
 import abc
 import logging
 
+from .datasets import DatasetManager, DatasetType
+
 
 class TRCLabApp(abc.ABC):
     RUNTIME_TYPE = os.environ["PROJECT_RUNTIME"]
@@ -14,10 +16,10 @@ class TRCLabApp(abc.ABC):
     __HANDLER.setFormatter(__FORMATTER)
     __LOGGER.addHandler(__HANDLER)
 
-    def __init__(self, app_name):
-        self.__app_name: str = app_name
+    def __init__(self, app_name: str):
+        self.__app_name = app_name
         self.__logger = TRCLabApp.__LOGGER.getChild(self.__app_name)
-        self.__dataset_manager = None  # TODO Dataset Manager
+        self.__dataset_manager = DatasetManager(TRCLabApp.__LOGGER.getChild("dataset_manager"))
 
     @property
     def logger(self) -> logging.Logger:
@@ -37,34 +39,34 @@ class TRCLabApp(abc.ABC):
         """
         return self.__app_name
 
-    def run(self) -> None:
-        """
-        Start your application.
-
-        """
-        TRCLabApp.__LOGGER.info("TRCLab application framework launched.")
-        self.__launch()
-
     def __launch(self) -> None:
         """
         Do something when the application is launched
 
         """
-        self.on_enable()
+        self.on_enable()  # must be the last line
 
     def __stop(self) -> None:
         """
         Do something when the application is stopped
 
         """
-        self.on_disable()
+        self.on_disable()  # must be the first line
+
+    def run(self) -> None:
+        """
+        Start your application.
+
+        """
+        TRCLabApp.__LOGGER.info("TRCLab application framework launched.")
+        self.__launch()  # must be the last line
 
     def __del__(self):
         """
         Run when a class instance is destructured
 
         """
-        self.__stop()
+        self.__stop()  # must be the last line
         TRCLabApp.__LOGGER.info("TRCLab application framework stopped.")
 
     @abc.abstractmethod

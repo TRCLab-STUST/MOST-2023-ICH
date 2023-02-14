@@ -1,12 +1,11 @@
 import os
 import abc
 
-from ..application.trclab import TRCLabApp
-
 
 class DatasetFileManager(abc.ABC):
 
     def __init__(self, dataset_dir: str):
+        from ...application.trclab import TRCLabApp
         self.__folder_path = ""
 
         if TRCLabApp.RUNTIME_TYPE == "LOCAL":

@@ -1,8 +1,9 @@
 import os
 import glob
 import random
+from typing import Dict
 
-from trclab.datasets.dataset_file_manager import DatasetFileManager
+from ..application.datasets import DatasetFileManager
 
 
 class ICH127FileManager(DatasetFileManager):
@@ -15,7 +16,7 @@ class ICH127FileManager(DatasetFileManager):
         image_files = glob.glob(os.path.join(self.folder_path, "**/*.dcm"), recursive=True)
         label_files = glob.glob(os.path.join(self.folder_path, "**/*.tif"), recursive=True)
 
-        dataset_paired: dict = dict()
+        dataset_paired: Dict[str, tuple] = {}
         for image_file in image_files:
             image_basename = os.path.basename(image_file).lower()
             image_basename = image_basename.replace("_", "-").replace(" ", "")

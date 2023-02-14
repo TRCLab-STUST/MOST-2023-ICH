@@ -1,6 +1,6 @@
 import os
 
-from trclab.datasets.dataset_file_manager import DatasetFileManager
+from ..application.datasets import DatasetFileManager
 
 
 class ICH2500FileManager(DatasetFileManager):
