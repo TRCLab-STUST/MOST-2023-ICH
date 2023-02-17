@@ -39,6 +39,9 @@ publish: ## Publish Package
 	sudo chown -R $(USER):$(USER) ./dist
 	sudo chown -R $(USER):$(USER) ./trclab.egg-info
 	twine upload dist/*
+	sudo rm -rf ./build
+	sudo rm -rf ./dist
+	sudo rm -rf ./trclab.egg-info
 
 
 ### Build ###
