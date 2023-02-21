@@ -3,6 +3,7 @@ import abc
 import logging
 
 from .datasets import DatasetManager, DatasetType
+from ..datasets import DatasetICH420
 
 
 class TRCLabApp(abc.ABC):
@@ -19,7 +20,9 @@ class TRCLabApp(abc.ABC):
     def __init__(self, app_name: str):
         self.__app_name = app_name
         self.__logger = TRCLabApp.__LOGGER.getChild(self.__app_name)
-        self.__dataset_manager = DatasetManager(TRCLabApp.__LOGGER.getChild("dataset_manager"))
+        self.__dataset_manager = DatasetManager(
+            TRCLabApp.__LOGGER.getChild("dataset_manager")
+        )
 
     @property
     def logger(self) -> logging.Logger:
@@ -38,6 +41,15 @@ class TRCLabApp(abc.ABC):
         :return: App Name
         """
         return self.__app_name
+
+    @property
+    def datasets(self) -> DatasetManager:
+        """
+        取的資料集管理器
+
+        :return: 資料集管理器
+        """
+        return self.__dataset_manager
 
     def __launch(self) -> None:
         """
@@ -58,6 +70,7 @@ class TRCLabApp(abc.ABC):
         Start your application.
 
         """
+        self.__dataset_manager.register(DatasetType.ICH_420, DatasetICH420)
         TRCLabApp.__LOGGER.info("TRCLab application framework launched.")
         self.__launch()  # must be the last line
 

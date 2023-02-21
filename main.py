@@ -7,6 +7,8 @@ class MyApp(tlab.TRCLabApp):
         super().__init__("my_app")
 
     def on_enable(self):
+        self.datasets.get_dataset(tlab.DatasetType.ICH_420).get_train_set()
+        self.datasets.get_dataset(tlab.DatasetType.ICH_420).get_test_set()
         self.logger.info("Hello World")
 
     def on_disable(self):

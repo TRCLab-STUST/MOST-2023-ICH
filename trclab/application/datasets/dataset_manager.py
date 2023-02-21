@@ -11,7 +11,9 @@ class DatasetManager(object):
         self.__logger: Logger = logger
         self.__datasets: Dict[str, Dataset.__subclasses__()] = {}
 
-    def register(self, dataset_name: Union[str, DatasetType], dataset_class: Dataset.__subclasses__()) -> bool:
+    def register(self,
+                 dataset_name: Union[str, DatasetType],
+                 dataset_class: Dataset.__subclasses__()) -> bool:
         """
         向系統註冊資料集
 
@@ -32,7 +34,7 @@ class DatasetManager(object):
             self.__logger.warning(f"Dataset '{dataset_name}' is existed")
             return False
 
-        self.__datasets[dataset_name] = dataset_class
+        self.__datasets[dataset_name] = dataset_class(self.__logger.getChild(dataset_name))
         self.__logger.info(f"Register dataset '{dataset_name}' with class '{dataset_class.__name__}'")
         return True
 
@@ -52,7 +54,7 @@ class DatasetManager(object):
             self.__logger.warning(f"Dataset '{dataset_name}' must be registered first")
             return None
 
-        return self.__datasets.get(dataset_name)()
+        return self.__datasets.get(dataset_name)
 
     def is_register(self, dataset_name: Union[str, DatasetType]) -> bool:
         """
@@ -65,4 +67,9 @@ class DatasetManager(object):
 
     @property
     def registered(self) -> tuple:
+        """
+        查看以註冊的資料集
+
+        :return: 註冊的資料集
+        """
         return tuple(self.__datasets.keys())
