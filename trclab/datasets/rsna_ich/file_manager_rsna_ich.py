@@ -3,7 +3,7 @@ import os
 import pandas as pd
 from typing import List
 
-from ..application.datasets import DatasetFileManager
+from .. import DatasetFileManager
 
 
 class RsnaICHFileManager(DatasetFileManager):

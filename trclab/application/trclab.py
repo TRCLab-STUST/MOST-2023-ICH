@@ -2,8 +2,8 @@ import os
 import abc
 import logging
 
-from .datasets import DatasetManager, DatasetType
-from ..datasets import DatasetICH420
+from trclab.datasets import DatasetType, DatasetManager
+from trclab.datasets import DatasetICH420
 
 
 class TRCLabApp(abc.ABC):

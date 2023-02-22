@@ -1,8 +1,8 @@
 from logging import Logger
 from typing import Dict, Union, Optional
 
-from .dataset import Dataset
-from .dataset_type import DatasetType
+from . import Dataset
+from . import DatasetType
 
 
 class DatasetManager(object):
@@ -34,7 +34,7 @@ class DatasetManager(object):
             self.__logger.warning(f"Dataset '{dataset_name}' is existed")
             return False
 
-        self.__datasets[dataset_name] = dataset_class(self.__logger.getChild(dataset_name))
+        self.__datasets[dataset_name] = dataset_class
         self.__logger.info(f"Register dataset '{dataset_name}' with class '{dataset_class.__name__}'")
         return True
 
@@ -54,7 +54,7 @@ class DatasetManager(object):
             self.__logger.warning(f"Dataset '{dataset_name}' must be registered first")
             return None
 
-        return self.__datasets.get(dataset_name)
+        return self.__datasets.get(dataset_name)(self.__logger.getChild(dataset_name))
 
     def is_register(self, dataset_name: Union[str, DatasetType]) -> bool:
         """

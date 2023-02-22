@@ -1,6 +1,6 @@
 from logging import Logger
 
-from ...application.datasets import Dataset
+from .. import Dataset
 from . import ICH420FileManager
 
 

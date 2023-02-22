@@ -3,7 +3,7 @@ import glob
 import random
 from typing import Dict
 
-from ..application.datasets import DatasetFileManager
+from .. import DatasetFileManager
 
 
 class ICH127FileManager(DatasetFileManager):

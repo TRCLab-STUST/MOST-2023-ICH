@@ -1,7 +1,7 @@
 import os
 from typing import List
 
-from trclab.application.datasets import DatasetFileManager
+from .. import DatasetFileManager
 
 
 class ICH420FileManager(DatasetFileManager):

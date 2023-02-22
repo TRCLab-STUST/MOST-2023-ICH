@@ -2,7 +2,7 @@ import abc
 from typing import Optional
 from logging import Logger
 
-from . import DatasetFileManager
+from .dataset_file_manager import DatasetFileManager
 
 
 class Dataset(abc.ABC):

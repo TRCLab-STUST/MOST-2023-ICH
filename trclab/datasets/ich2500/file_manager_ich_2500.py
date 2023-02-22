@@ -1,6 +1,6 @@
 import os
 
-from ..application.datasets import DatasetFileManager
+from .. import DatasetFileManager
 
 
 class ICH2500FileManager(DatasetFileManager):

@@ -1,0 +1,1 @@
+from file_manager_ich_2500 import ICH2500FileManager

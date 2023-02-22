@@ -5,9 +5,9 @@ import abc
 class DatasetFileManager(abc.ABC):
 
     def __init__(self, dataset_dir: str):
-        from ...application.trclab import TRCLabApp
+        from trclab.application import TRCLabApp
+        
         self.__folder_path = ""
-
         if TRCLabApp.RUNTIME_TYPE == "LOCAL":
             self.__folder_path = os.environ["DATASET_DIR"]
         elif TRCLabApp.RUNTIME_TYPE == "CONTAINER":
