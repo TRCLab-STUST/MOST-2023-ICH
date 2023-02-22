@@ -60,3 +60,13 @@ class ICH127FileManager(DatasetFileManager):
         :return: ICH127 測試集影像資料
         """
         return list(self.__test_paired.keys())
+
+    @property
+    def train_label_filepaths(self) -> [str]:
+        # TODO Get train label filepaths
+        pass
+
+    @property
+    def test_label_filepaths(self) -> [str]:
+        # TODO Get test label filepaths
+        pass

@@ -23,8 +23,8 @@ class Dataset(abc.ABC):
 
     @abc.abstractmethod
     def get_train_set(self):
-        return NotImplemented
+        raise NotImplemented
 
     @abc.abstractmethod
     def get_test_set(self):
-        return NotImplemented
+        raise NotImplemented

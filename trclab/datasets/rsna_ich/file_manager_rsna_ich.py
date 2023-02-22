@@ -1,7 +1,7 @@
 import glob
 import os
 import pandas as pd
-from typing import List
+from typing import List, Optional
 
 from .. import DatasetFileManager
 
@@ -33,7 +33,7 @@ class RsnaICHFileManager(DatasetFileManager):
         return glob.glob(os.path.join(self.__dataset_test, "*.dcm"))
 
     @property
-    def train_labels(self) -> pd.DataFrame:
+    def train_label_filepaths(self) -> pd.DataFrame:
         """
         獲取 RSNA ICH 影像腦出血類行的標記資料
 
@@ -49,3 +49,13 @@ class RsnaICHFileManager(DatasetFileManager):
         rsna_df["Image"] = "ID_" + rsna_df["Image"]
 
         return rsna_df
+
+    @property
+    def test_label_filepaths(self) -> None:
+        """
+        RSNA ICH 沒有測試標記
+
+        :rtype: None
+        :return: None
+        """
+        raise FileNotFoundError("RSNA ICH 資料集沒有測試標記檔案")

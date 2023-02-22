@@ -6,7 +6,7 @@ class DatasetFileManager(abc.ABC):
 
     def __init__(self, dataset_dir: str):
         from trclab.application import TRCLabApp
-        
+
         self.__folder_path = ""
         if TRCLabApp.RUNTIME_TYPE == "LOCAL":
             self.__folder_path = os.environ["DATASET_DIR"]
@@ -29,4 +29,14 @@ class DatasetFileManager(abc.ABC):
     @property
     @abc.abstractmethod
     def test_image_filepaths(self) -> [str]:
+        return NotImplemented
+
+    @property
+    @abc.abstractmethod
+    def train_label_filepaths(self) -> [str]:
+        return NotImplemented
+
+    @property
+    @abc.abstractmethod
+    def test_label_filepaths(self) -> [str]:
         return NotImplemented
