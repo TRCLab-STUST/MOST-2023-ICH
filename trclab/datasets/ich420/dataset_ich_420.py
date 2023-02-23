@@ -7,7 +7,7 @@ from . import ICH420FileManager
 class DatasetICH420(Dataset):
 
     def __init__(self, logger: Logger):
-        super().__init__(logger, ICH420FileManager)
+        super().__init__(logger, ICH420FileManager())
 
     def get_test_set(self):
         pass

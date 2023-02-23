@@ -13,13 +13,13 @@ class Dataset(abc.ABC):
             self.__logger.error("Dataset file manager not defined.")
             raise ValueError("Dataset file manager not defined.")
 
-        # Check is subclass
-        if not issubclass(dataset_file_manager, DatasetFileManager):
-            self.__logger.error(
-                f"Dataset class '{dataset_file_manager.__name__}' must inherit class '{DatasetFileManager.__name__}'")
-            raise TypeError(f"'{dataset_file_manager.__name__}' must inherit class '{DatasetFileManager.__name__}'")
+        if not isinstance(dataset_file_manager, DatasetFileManager):
+            self.__logger.error(f"'{dataset_file_manager.__name__}' must be an instance"
+                                f" of class '{DatasetFileManager.__name__}.'")
+            raise AttributeError(f"'{dataset_file_manager.__name__}' must be an instance"
+                                 f" of class '{DatasetFileManager.__name__}.'")
 
-        self.__dataset_file_manager = dataset_file_manager()
+        self.__dataset_file_manager = dataset_file_manager
 
     @property
     def dataset_files(self):
