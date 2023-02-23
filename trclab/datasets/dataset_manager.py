@@ -52,9 +52,9 @@ class DatasetManager(object):
         # Check Dataset Exists or not
         if not self.is_register(dataset_name):
             self.__logger.warning(f"Dataset '{dataset_name}' must be registered first")
-            return None
+            raise ModuleNotFoundError
 
-        return self.__datasets.get(dataset_name)(self.__logger.getChild(dataset_name))
+        return self.__datasets[dataset_name](self.__logger.getChild(dataset_name))
 
     def is_register(self, dataset_name: Union[str, DatasetType]) -> bool:
         """

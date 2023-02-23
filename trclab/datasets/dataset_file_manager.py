@@ -4,7 +4,7 @@ import abc
 
 class DatasetFileManager(abc.ABC):
 
-    def __init__(self, dataset_dir: str):
+    def __init__(self, dataset_dir: str = ""):
         from trclab.application import TRCLabApp
 
         self.__folder_path = ""
@@ -14,6 +14,9 @@ class DatasetFileManager(abc.ABC):
             self.__folder_path = os.environ["DOCKER_MOUNT_DATASET_DIR"]
         else:
             raise TypeError
+
+        if dataset_dir == "":
+            raise ValueError("請提供資料集的資料夾名稱")
 
         self.__dataset_dir = os.path.join(self.__folder_path, dataset_dir)
 

@@ -13,4 +13,7 @@ class DatasetICH420(Dataset):
         pass
 
     def get_train_set(self):
-        pass
+        return self.__train_set()
+
+    def __train_set(self):
+        return self.dataset_files.folder_path
