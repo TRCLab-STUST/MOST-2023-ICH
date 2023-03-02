@@ -3,7 +3,7 @@ import abc
 import logging
 
 from trclab.datasets import DatasetType, DatasetManager
-from trclab.datasets import DatasetICH420
+from trclab.datasets import DatasetICH420, DatasetRSNAICH
 
 
 class TRCLabApp(abc.ABC):
@@ -70,7 +70,10 @@ class TRCLabApp(abc.ABC):
         Start your application.
 
         """
+        # Register Dataset
         self.__dataset_manager.register(DatasetType.ICH_420, DatasetICH420)
+        self.__dataset_manager.register(DatasetType.RSNA_ICH, DatasetRSNAICH)
+
         TRCLabApp.__LOGGER.info("TRCLab application framework launched.")
         self.__launch()  # must be the last line
 

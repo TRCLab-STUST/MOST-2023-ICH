@@ -21,14 +21,36 @@ class Dataset(abc.ABC):
 
         self.__dataset_file_manager = dataset_file_manager
 
+        # Call Prepare Dataset
+        self.logger.info(f"Prepare '{dataset_file_manager.__class__.__name__}' Dataset...")
+        self.prepare_dataset()
+        self.logger.info(f"Dataset '{self.__class__.__name__}' has been prepared done.")
+
     @property
-    def dataset_files(self):
+    def dataset_files(self) -> DatasetFileManager:
         """
         取得資料集檔案
 
         :return: DatasetFileManager
         """
         return self.__dataset_file_manager
+
+    @property
+    def logger(self) -> Logger:
+        """
+        取的日誌輸出
+
+        :return: Logger
+        """
+        return self.__logger
+
+    @abc.abstractmethod
+    def prepare_dataset(self) -> None:
+        """
+        需要實做資料集取用前期準備
+
+        """
+        raise NotImplemented
 
     @abc.abstractmethod
     def get_train_set(self):

@@ -1,13 +1,15 @@
 import os
 import abc
+from logging import Logger
 
 
 class DatasetFileManager(abc.ABC):
 
-    def __init__(self, dataset_dir: str = ""):
+    def __init__(self, dataset_dir: str = "", logger: Logger = None):
         from trclab.application import TRCLabApp
 
         self.__folder_path = ""
+        self.__logger = logger
         if TRCLabApp.RUNTIME_TYPE == "LOCAL":
             self.__folder_path = os.environ["DATASET_DIR"]
         elif TRCLabApp.RUNTIME_TYPE == "CONTAINER":
@@ -19,6 +21,10 @@ class DatasetFileManager(abc.ABC):
             raise ValueError("請提供資料集的資料夾名稱")
 
         self.__dataset_dir = os.path.join(self.__folder_path, dataset_dir)
+
+    @property
+    def logger(self) -> Logger:
+        return self.__logger
 
     @property
     def folder_path(self) -> str:
