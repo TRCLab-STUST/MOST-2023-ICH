@@ -5,7 +5,7 @@ include .env
 
 ### Mount ###
 _MNT_PROJECT := $(shell pwd):/app
-_MNT_DATASETS := $(DATASET_DIR):$(DOCKER_MOUNT_DATASET_DIR)
+_MNT_DATASETS := $(	DATASET_DIR):$(DOCKER_MOUNT_DATASET_DIR)
 _MNT := -v ${_MNT_PROJECT} -v ${_MNT_DATASETS}
 
 ### Docker ###
@@ -27,21 +27,20 @@ help: ## This help message
 runtime: ## Run default runtime
 	docker run ${_DOCKER_ARGS} ${_DOCKER_IMG}
 
-tensorboard: ## Up tensorboard serivce on port 8081
+tensorboard: ## Up tensorboard service on port 8081
 	docker run ${_DOCKER_ARGS} -p ${_PORT_TENSORBOARD} ${_DOCKER_IMG} tensorboard ${_TENSORBOARD_ARGS}
 
-jupyter: ## Up jupyter serivce on port 8081
-	docker run ${_DOCKER_ARGS} -p ${_PORT_JUPYTER} -d ${_DOCKER_IMG_JUPY}
+jupyter: ## Up jupyter service on port 8081
+	docker run ${_DOCKER_ARGS} -p ${_PORT_JUPYTER} ${_DOCKER_IMG_JUPY}
 
 publish: ## Publish Package
 	docker run ${_DOCKER_ARGS} ${_DOCKER_IMG} python setup.py sdist bdist_wheel
-	sudo chown -R $(USER):$(USER) ./build
-	sudo chown -R $(USER):$(USER) ./dist
-	sudo chown -R $(USER):$(USER) ./trclab.egg-info
+	sudo chown -R $(USER):$(USER) ./build ./dist ./trclab.egg-info
 	twine upload dist/*
-	sudo rm -rf ./build
-	sudo rm -rf ./dist
-	sudo rm -rf ./trclab.egg-info
+	sudo rm -rf ./build ./dist ./trclab.egg-info
+
+frontend-dev: ## Run most ICH frontend (Dev Mode)
+	docker compose -f .docker/docker-compose.frontend.dev.yaml up
 
 
 ### Build ###
