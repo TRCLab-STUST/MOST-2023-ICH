@@ -1,14 +1,15 @@
-from logging import Logger
 from pathlib import Path
+from logging import Logger
 from typing import Optional, List
 
 import pandas as pd
 from tqdm import tqdm
 from tqdm.contrib.logging import logging_redirect_tqdm
 
-from . import RsnaICHFileManager
 from .. import Dataset
+from . import RsnaICHFileManager
 from ...ich import ICHType, ICHImage
+from ...cache import Cache
 
 
 class DatasetRSNAICH(Dataset):
@@ -22,6 +23,11 @@ class DatasetRSNAICH(Dataset):
         資料集取用前期準備
 
         """
+        # Check Cache
+        train_label_cache = Cache(f"{self.__class__.__name__}-train-label", self.logger)
+        self.__train_labels = train_label_cache.load()
+
+        # if data is none
         if self.__train_labels is None:
             self.logger.info("Process RSNA Dataset Label CSV.")
             rsna_df = pd.read_csv(self.dataset_files.train_label_filepaths)
@@ -35,6 +41,9 @@ class DatasetRSNAICH(Dataset):
 
             self.__train_labels = rsna_df
             self.logger.info("RSNA Dataset Label CSV. Processed Done")
+
+            train_label_cache.save(rsna_df)
+            self.logger.info("Create Label CSV Cache file.")
 
     def get_train_set(self):
         # TODO Change to Yield

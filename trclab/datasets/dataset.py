@@ -2,8 +2,8 @@ import abc
 from logging import Logger
 from typing import Optional, List
 
-from .dataset_file_manager import DatasetFileManager
 from ..ich import ICHImage
+from .dataset_file_manager import DatasetFileManager
 
 
 class Dataset(abc.ABC):

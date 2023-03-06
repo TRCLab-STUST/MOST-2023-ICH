@@ -1,9 +1,12 @@
-import glob
 import os
-import pickle
-from logging import Logger
+import glob
+import time
 from pathlib import Path
+from logging import Logger
 from typing import Optional
+from datetime import datetime
+
+import pickle
 
 from ..time import STime
 
@@ -34,8 +37,8 @@ class Cache(object):
 
         with open(f"{self.__filename}_{STime()}.tlab", "wb") as cache_file:
             pickle.dump(data_obj, cache_file)
-
-        self.__cache_file = self.__get_cache_file()
+            self.__cache_file = self.__get_cache_file()
+            self.__logger.info(f"'{self.__object_name}' cache file created. '{self.__cache_file}'")
 
     def load(self):
         """
@@ -44,10 +47,11 @@ class Cache(object):
         :return: 載入物件
         """
         if self.__cache_file is None:
-            self.__logger.error("Cache file not founded.")
-            raise FileNotFoundError
+            self.__logger.info(f"Cache file '{self.__object_name}' not founded.")
+            return None
 
         with open(self.__cache_file, "rb") as cache_file:
+            self.__logger.info(f"'{self.__object_name}' loading from cache file '{self.__cache_file}'")
             return pickle.load(cache_file)
 
     def is_exists(self):
@@ -56,6 +60,9 @@ class Cache(object):
     def __get_cache_file(self) -> Optional[str]:
         cache_list = glob.glob(f"{self.__filename}_*.tlab")
         cache_list.sort()
+
+        if len(cache_list) == 0:
+            return None
 
         if len(cache_list) > 1:
             for cache_filepath in cache_list[:-1]:
