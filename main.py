@@ -8,12 +8,12 @@ class MyApp(tlab.TRCLabApp):
 
     def on_enable(self):
         datasets = self.datasets.get_dataset(tlab.DatasetType.RSNA_ICH)
-        # train_image_set = datasets.get_train_set()
-        # self.logger.info(train_image_set)
-        # self.logger.info(len(train_image_set))
-        # for item in train_image_set:
-        #     self.logger.info(item.ich_types.value)
-        # self.logger.info(train_image_set[0].ich_types)
+        train_image_set = datasets.get_train_set()
+        for idx, ich_image in enumerate(train_image_set):
+            if idx > 5:
+                return
+
+            print(ich_image.image_type)
 
     def on_disable(self):
         self.logger.info(f"{self.app_name} has been disable")

@@ -1,10 +1,8 @@
 from pathlib import Path
 from logging import Logger
-from typing import Optional, List
+from typing import Optional, Generator
 
 import pandas as pd
-from tqdm import tqdm
-from tqdm.contrib.logging import logging_redirect_tqdm
 
 from .. import Dataset
 from . import RsnaICHFileManager
@@ -16,11 +14,12 @@ class DatasetRSNAICH(Dataset):
     def __init__(self, logger: Logger):
         self.__train_labels: Optional[pd.DataFrame] = None
         super().__init__(logger, RsnaICHFileManager(logger.getChild(RsnaICHFileManager.__name__)))
-        self.__train_images: Optional[List[ICHImage]] = None
 
     def prepare_dataset(self):
         """
         資料集取用前期準備
+
+        先尋找是否有可用的快取資料，如果沒有則生成資料並快取起來。
 
         """
         # Check Cache
@@ -42,27 +41,23 @@ class DatasetRSNAICH(Dataset):
             self.__train_labels = rsna_df
             self.logger.info("RSNA Dataset Label CSV. Processed Done")
 
+            # 儲存快取資料
             train_label_cache.save(rsna_df)
             self.logger.info("Create Label CSV Cache file.")
 
-    def get_train_set(self):
-        # TODO Change to Yield
-        if self.__train_images is None:
-            self.__train_images = []
-            with logging_redirect_tqdm():
-                for image_filepath in tqdm(self.dataset_files.train_image_filepaths[:50]):
-                    pure_filename = Path(image_filepath).stem
-                    row_data = self.__train_labels.loc[self.__train_labels["Image"] == pure_filename]
-                    diagnosis_label = ICHType.NOT_ANY
-                    for diagnosis in ["INTRAPARENCHYMAL", "INTRAVENTRICULAR", "SUBARACHNOID", "SUBDURAL", "EPIDURAL"]:
-                        if row_data[diagnosis.lower()].item():
-                            diagnosis_label |= ICHType[diagnosis]
+    def get_train_set(self) -> Generator[ICHImage, None, None]:
+        for image_filepath in self.dataset_files.train_image_filepaths:
+            pure_filename = Path(image_filepath).stem
+            row_data = self.__train_labels.loc[self.__train_labels["Image"] == pure_filename]
+            diagnosis_label = ICHType.NOT_ANY
+            for diagnosis in ["INTRAPARENCHYMAL", "INTRAVENTRICULAR", "SUBARACHNOID", "SUBDURAL", "EPIDURAL"]:
+                if row_data[diagnosis.lower()].item():
+                    diagnosis_label |= ICHType[diagnosis]
 
-                    ich_image = ICHImage(image_filepath)
-                    ich_image.ich_types = diagnosis_label
-                    self.__train_images.append(ich_image)
+            ich_image = ICHImage(image_filepath)
+            ich_image.ich_types = diagnosis_label
 
-        return self.__train_images
+            yield ich_image
 
     def get_test_set(self):
         pass
