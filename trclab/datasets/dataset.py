@@ -1,7 +1,8 @@
 import abc
-from typing import Optional
 from logging import Logger
+from typing import Optional, List
 
+from ..ich import ICHImage
 from .dataset_file_manager import DatasetFileManager
 
 
@@ -21,8 +22,13 @@ class Dataset(abc.ABC):
 
         self.__dataset_file_manager = dataset_file_manager
 
+        # Call Prepare Dataset
+        self.logger.info(f"Prepare '{dataset_file_manager.__class__.__name__}' Dataset...")
+        self.prepare_dataset()
+        self.logger.info(f"Dataset '{self.__class__.__name__}' has been prepared done.")
+
     @property
-    def dataset_files(self):
+    def dataset_files(self) -> DatasetFileManager:
         """
         取得資料集檔案
 
@@ -30,8 +36,25 @@ class Dataset(abc.ABC):
         """
         return self.__dataset_file_manager
 
+    @property
+    def logger(self) -> Logger:
+        """
+        取的日誌輸出
+
+        :return: Logger
+        """
+        return self.__logger
+
     @abc.abstractmethod
-    def get_train_set(self):
+    def prepare_dataset(self) -> None:
+        """
+        需要實做資料集取用前期準備
+
+        """
+        raise NotImplemented
+
+    @abc.abstractmethod
+    def get_train_set(self) -> List[ICHImage]:
         """
         需要實做取的訓練資料集
 
@@ -39,7 +62,7 @@ class Dataset(abc.ABC):
         raise NotImplemented
 
     @abc.abstractmethod
-    def get_test_set(self):
+    def get_test_set(self) -> List[ICHImage]:
         """
         需要實做取的測試資料集
 

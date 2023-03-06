@@ -1,1 +1,2 @@
-from file_manager_rsna_ich import RsnaICHFileManager
+from .file_manager_rsna_ich import RsnaICHFileManager
+from .dataset_rsna_ich import DatasetRSNAICH

@@ -1,7 +1,7 @@
-import glob
 import os
-import pandas as pd
-from typing import List, Optional
+import glob
+from logging import Logger
+from typing import List
 
 from .. import DatasetFileManager
 
@@ -9,8 +9,8 @@ from .. import DatasetFileManager
 class RsnaICHFileManager(DatasetFileManager):
     __DATASET_DIR = os.environ["DATASET_RSNA_ICH_DIRNAME"]
 
-    def __init__(self):
-        super().__init__(RsnaICHFileManager.__DATASET_DIR)
+    def __init__(self, logger: Logger):
+        super().__init__(RsnaICHFileManager.__DATASET_DIR, logger)
         self.__dataset_train = os.path.join(self.folder_path, "stage_2_train")
         self.__dataset_test = os.path.join(self.folder_path, "stage_2_train")
 
@@ -33,22 +33,14 @@ class RsnaICHFileManager(DatasetFileManager):
         return glob.glob(os.path.join(self.__dataset_test, "*.dcm"))
 
     @property
-    def train_label_filepaths(self) -> pd.DataFrame:
+    def train_label_filepaths(self) -> str:
         """
         獲取 RSNA ICH 影像腦出血類行的標記資料
 
         :rtype: object
         :return: RSNA ICH 出血類型標記資料
         """
-        rsna_df = pd.read_csv(os.path.join(self.folder_path, "stage_2_train.csv"))
-        rsna_df[["ID", "Image", "Diagnosis"]] = rsna_df["ID"].str.split("_", expand=True)
-        rsna_df = rsna_df[["Image", "Diagnosis", "Label"]]
-        rsna_df.drop_duplicates(inplace=True)
-
-        rsna_df = rsna_df.pivot(index="Image", columns="Diagnosis", values="Label").reset_index()
-        rsna_df["Image"] = "ID_" + rsna_df["Image"]
-
-        return rsna_df
+        return os.path.join(self.folder_path, "stage_2_train.csv")
 
     @property
     def test_label_filepaths(self) -> None:
