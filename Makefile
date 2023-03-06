@@ -5,8 +5,8 @@ include .env
 
 ### Mount ###
 _MNT_PROJECT := $(shell pwd):/app
-_MNT_DATASETS := $(	DATASET_DIR):$(DOCKER_MOUNT_DATASET_DIR)
-_MNT := -v ${_MNT_PROJECT} -v ${_MNT_DATASETS}
+_MNT_DATASETS := $(DATASET_DIR):$(DOCKER_MOUNT_DATASET_DIR)
+_MNT := -v ${_MNT_PROJECT} -v ${_MNT_DATASETS} -v ich-cache:${CACHE_FOLDER}
 
 ### Docker ###
 _DOCKER_IMG := $(DOCKER_USER)/$(DOCKER_IMAGE):$(DOCKER_IMAGE_TAG)
