@@ -1,8 +1,9 @@
 import abc
-from typing import Optional
 from logging import Logger
+from typing import Optional, List
 
 from .dataset_file_manager import DatasetFileManager
+from ..ich import ICHImage
 
 
 class Dataset(abc.ABC):
@@ -53,7 +54,7 @@ class Dataset(abc.ABC):
         raise NotImplemented
 
     @abc.abstractmethod
-    def get_train_set(self):
+    def get_train_set(self) -> List[ICHImage]:
         """
         需要實做取的訓練資料集
 
@@ -61,7 +62,7 @@ class Dataset(abc.ABC):
         raise NotImplemented
 
     @abc.abstractmethod
-    def get_test_set(self):
+    def get_test_set(self) -> List[ICHImage]:
         """
         需要實做取的測試資料集
 
