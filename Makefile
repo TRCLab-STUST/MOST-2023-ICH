@@ -42,6 +42,17 @@ publish: ## Publish Package
 frontend-dev: ## Run most ICH frontend (Dev Mode)
 	docker compose -f .docker/docker-compose.frontend.dev.yaml up
 
+gen-docs: clean-docs ## Generator Docs
+	cp -r docs/_generator docs/generator
+	sphinx-apidoc -o docs/generator trclab
+	cd docs/generator && make html
+	mv docs/generator/_build/html/* docs/
+	rm -rf docs/generator
+
+clean-docs:
+	rm -rf docs/_modules docs/_sources docs/_static docs/generator
+	rm -rf docs/*.html docs/*.inv docs/*.js
+
 
 ### Build ###
 build: build-gpu ## Build Image From Dockerfile
